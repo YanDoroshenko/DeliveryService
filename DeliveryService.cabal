@@ -1,0 +1,72 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           DeliveryService
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/DeliveryService#readme>
+homepage:       https://github.com/YanDoroshenko/DeliveryService#readme
+bug-reports:    https://github.com/YanDoroshenko/DeliveryService/issues
+author:         Yan Doroshenko
+maintainer:     yandoroshenko@protonmail.com
+copyright:      2021 Yan Doroshenko
+license:        GPLv3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/YanDoroshenko/DeliveryService
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_DeliveryService
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , cql >=4.0
+    , cql-io >=1.1.1
+    , text >=1.2.4.1
+    , tinylog >=0.15.0
+  default-language: Haskell2010
+
+executable DeliveryService-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_DeliveryService
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      DeliveryService
+    , base >=4.7 && <5
+    , cql >=4.0
+    , cql-io >=1.1.1
+    , text >=1.2.4.1
+    , tinylog >=0.15.0
+  default-language: Haskell2010
+
+test-suite DeliveryService-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_DeliveryService
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      DeliveryService
+    , base >=4.7 && <5
+    , cql >=4.0
+    , cql-io >=1.1.1
+    , text >=1.2.4.1
+    , tinylog >=0.15.0
+  default-language: Haskell2010
