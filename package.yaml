@@ -25,6 +25,7 @@ dependencies:
 - cql >= 4.0
 - text >= 1.2.4.1
 - tinylog >= 0.15.0
+- scotty >= 0.12
 
 library:
   source-dirs: src

@@ -34,6 +34,7 @@ library
       base >=4.7 && <5
     , cql >=4.0
     , cql-io >=1.1.1
+    , scotty >=0.12
     , text >=1.2.4.1
     , tinylog >=0.15.0
   default-language: Haskell2010
@@ -50,6 +51,7 @@ executable DeliveryService-exe
     , base >=4.7 && <5
     , cql >=4.0
     , cql-io >=1.1.1
+    , scotty >=0.12
     , text >=1.2.4.1
     , tinylog >=0.15.0
   default-language: Haskell2010
@@ -67,6 +69,7 @@ test-suite DeliveryService-test
     , base >=4.7 && <5
     , cql >=4.0
     , cql-io >=1.1.1
+    , scotty >=0.12
     , text >=1.2.4.1
     , tinylog >=0.15.0
   default-language: Haskell2010
