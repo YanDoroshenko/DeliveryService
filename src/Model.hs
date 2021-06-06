@@ -10,7 +10,7 @@ data RateDef = RateDef {
   upperPriceThreshold :: Double,
   freeSubtotalThreshold :: Double,
   weightInterval :: Double
-                 }
+                 } deriving (Eq, Show)
 
 data Request = Request {
   distance :: Double,
