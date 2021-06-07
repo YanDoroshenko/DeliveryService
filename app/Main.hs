@@ -3,19 +3,18 @@ module Main where
 
 import Model
 import DB
-import Utils
+import Service
 
 import Data.Monoid (mconcat)
-import Data.Int
-import Data.Decimal
 import Control.Monad.IO.Class
-import Database.CQL.Protocol
-
-getRates db = fmap apply <$> cqlQuery ("SELECT * FROM delivery.rates;" :: QueryString R() (Int32, Decimal, Decimal, Decimal, Maybe Decimal, Decimal, Decimal, Decimal, Decimal)) () db
+import System.Random
 
 main :: IO ()
 main =
   do
     c <- liftIO connect
     rates <- getRates c
+    id <- randomRIO (1, 10)
+    _ <- insertRate (RateDef id Nothing 2 3 4 5 6 7 8) c
     putStrLn $ foldr (\x y -> mconcat [y, (show x), "\n"]) "" rates
+    close c

@@ -5,13 +5,13 @@ import Model
 import Data.Int
 import Data.Decimal
 
-apply :: (Int32, Decimal, Decimal, Decimal, Maybe Decimal, Decimal, Decimal, Decimal, Decimal) -> RateDef
+apply :: (Int32, Maybe Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal) -> RateDef
 apply (
   maxDistance,
+  startingPrice,
   subtotalFactor,
   lowerSubtotalThreshold,
   upperSubtotalThreshold,
-  startingPrice,
   lowerPriceThreshold,
   upperPriceThreshold,
   freeSubtotalThreshold,
@@ -26,3 +26,24 @@ apply (
   upperPriceThreshold
   freeSubtotalThreshold
   weightInterval
+
+unapply :: RateDef -> (Int32, Maybe Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal)
+unapply  (RateDef
+  maxDistance
+  startingPrice
+  subtotalFactor
+  lowerSubtotalThreshold
+  upperSubtotalThreshold
+  lowerPriceThreshold
+  upperPriceThreshold
+  freeSubtotalThreshold
+  weightInterval) = (
+  (fromIntegral maxDistance) :: Int32,
+  startingPrice,
+  subtotalFactor,
+  lowerSubtotalThreshold,
+  upperSubtotalThreshold,
+  lowerPriceThreshold,
+  upperPriceThreshold,
+  freeSubtotalThreshold,
+  weightInterval)

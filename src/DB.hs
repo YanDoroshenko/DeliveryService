@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 module DB where
 
 import Database.CQL.IO as Client
@@ -16,3 +15,9 @@ cqlParams p = QueryParams One False p Nothing Nothing Nothing (Just True)
 
 cqlQuery queryString p client  =
     runClient client $ query queryString $ cqlParams p
+
+cqlInsert queryString p client =
+  runClient client $ write queryString $ cqlParams p
+
+close :: ClientState -> IO ()
+close c = shutdown c
