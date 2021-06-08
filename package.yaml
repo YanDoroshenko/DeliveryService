@@ -27,7 +27,7 @@ dependencies:
 - tinylog >= 0.15.0
 - scotty >= 0.12
 - Decimal >= 0.5.2
-- random >= 1.1
+- aeson >= 1.5.6
 
 library:
   source-dirs: src

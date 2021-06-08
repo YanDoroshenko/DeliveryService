@@ -1,23 +1,24 @@
+{-# LANGUAGE DeriveGeneric #-}
 module Model where
 
-import Data.Decimal
+import GHC.Generics
 
 data RateDef = RateDef {
   maxDistance :: Int,
-  startingPrice :: Maybe Decimal,
-  subtotalFactor :: Decimal,
-  lowerSubtotalThreshold :: Decimal,
-  upperSubtotalThreshold :: Decimal,
-  lowerPriceThreshold :: Decimal,
-  upperPriceThreshold :: Decimal,
-  freeSubtotalThreshold :: Decimal,
-  weightInterval :: Decimal
-                 } deriving (Eq, Show)
+  startingPrice :: Maybe Double,
+  subtotalFactor :: Double,
+  lowerSubtotalThreshold :: Double,
+  upperSubtotalThreshold :: Double,
+  lowerPriceThreshold :: Double,
+  upperPriceThreshold :: Double,
+  freeSubtotalThreshold :: Double,
+  weightInterval :: Double
+                 } deriving (Eq, Show, Generic)
 
 data Request = Request {
-  distance :: Decimal,
-  subtotal :: Decimal,
-  weight :: Decimal
+  distance :: Double,
+  subtotal :: Double,
+  weight :: Double
              }
 
-data Response = Response { price :: Decimal }
+data Response = Response { price :: Double }

@@ -3,9 +3,8 @@ module Utils where
 import Model
 
 import Data.Int
-import Data.Decimal
 
-apply :: (Int32, Maybe Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal) -> RateDef
+apply :: (Int32, Maybe Double, Double, Double, Double, Double, Double, Double, Double) -> RateDef
 apply (
   maxDistance,
   startingPrice,
@@ -27,7 +26,7 @@ apply (
   freeSubtotalThreshold
   weightInterval
 
-unapply :: RateDef -> (Int32, Maybe Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal)
+unapply :: RateDef -> (Int32, Maybe Double, Double, Double, Double, Double, Double, Double, Double)
 unapply  (RateDef
   maxDistance
   startingPrice

@@ -7,14 +7,23 @@ import Service
 
 import Data.Monoid (mconcat)
 import Control.Monad.IO.Class
-import System.Random
+import Web.Scotty
+import Data.Aeson (FromJSON, ToJSON)
+
+instance FromJSON RateDef
+instance ToJSON RateDef
 
 main :: IO ()
-main =
-  do
+main = scotty 3000 $ do
+  get "/" $ do
     c <- liftIO connect
-    rates <- getRates c
-    id <- randomRIO (1, 10)
-    _ <- insertRate (RateDef id Nothing 2 3 4 5 6 7 8) c
-    putStrLn $ foldr (\x y -> mconcat [y, (show x), "\n"]) "" rates
-    close c
+    rates <- liftIO $ getRates c
+    _ <- liftIO $ close c
+    json rates
+  post "/" $ do
+    x <- jsonData :: ActionM RateDef
+    c <- liftIO connect
+    _ <- liftIO $ insertRate x c
+    _ <- liftIO $ close c
+    json x
+
