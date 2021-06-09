@@ -16,6 +16,6 @@ data Request = Request {
   distance :: Double,
   subtotal :: Double,
   weight :: Double
-             }
+             } deriving (Eq, Show)
 
-data Response = Response { price :: Double }
+data Response = Response { price :: Double } deriving (Eq, Show)
