@@ -1,7 +1,4 @@
-{-# LANGUAGE DeriveGeneric #-}
 module Model where
-
-import GHC.Generics
 
 data RateDef = RateDef {
   maxDistance :: Int,
@@ -13,7 +10,7 @@ data RateDef = RateDef {
   upperPriceThreshold :: Double,
   freeSubtotalThreshold :: Double,
   weightInterval :: Double
-                 } deriving (Eq, Show, Generic)
+                 } deriving (Eq, Show)
 
 data Request = Request {
   distance :: Double,

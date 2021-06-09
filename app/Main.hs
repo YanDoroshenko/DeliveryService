@@ -4,14 +4,10 @@ module Main where
 import Model
 import DB
 import Service
+import Serializers
 
-import Data.Monoid (mconcat)
 import Control.Monad.IO.Class
 import Web.Scotty
-import Data.Aeson (FromJSON, ToJSON)
-
-instance FromJSON RateDef
-instance ToJSON RateDef
 
 main :: IO ()
 main = scotty 3000 $ do
