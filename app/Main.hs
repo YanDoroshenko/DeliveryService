@@ -16,14 +16,14 @@ main = scotty 3000 $ do
   get "/" $
     (liftIO $ getRates) >>= json
   post "/" $ do
-    x <- jsonData :: ActionM RateDef
+    x <- jsonData :: ActionM PostalCodeOverrideRate
     _ <- liftIO $ insertRate x
     json x
   post "/calculate" $ do
     x <- jsonData :: ActionM Request
     rates <- liftIO getRates
     case rates of
-      rate : _ -> json $ Response $ fromMaybe 0 $ startingPrice rate
+      rate : _ -> json $ Response $ startingPrice $ postalCodeRate rate
       _ -> do
         status notFound404
         text "No rates found"
