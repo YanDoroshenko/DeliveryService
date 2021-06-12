@@ -5,9 +5,6 @@ import Model
 import Data.Text
 import Data.UUID
 
-class Price a where
-  price :: a -> Maybe Double
-
 class RateTuple10 a where
   apply10 :: (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> a
   unapply10 :: a -> (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)

@@ -31,12 +31,6 @@ deriving instance Generic Request
 
 deriving instance Generic Response
 
-instance Price PostalCodeOverrideRate where
-  price (PostalCodeOverrideRate _ _ rate) = startingPrice rate
-
-instance Price LocationOverrideRate where
-  price (LocationOverrideRate _ _ rate) = startingPrice rate
-
 instance RateTuple10 PostalCodeOverrideRate where
   apply10 (id, postalCode, startingPrice, subtotalFactor, lowerSubtotalThreshold, upperSubtotalThreshold, lowerPriceThreshold, upperPriceThreshold, freeSubtotalThreshold, weightInterval) = PostalCodeOverrideRate id postalCode $ RateDef startingPrice subtotalFactor lowerSubtotalThreshold upperSubtotalThreshold lowerPriceThreshold upperPriceThreshold freeSubtotalThreshold weightInterval
   unapply10 (PostalCodeOverrideRate id postalCode (RateDef startingPrice subtotalFactor lowerSubtotalThreshold upperSubtotalThreshold lowerPriceThreshold upperPriceThreshold freeSubtotalThreshold weightInterval)) = (id, postalCode, startingPrice, subtotalFactor, lowerSubtotalThreshold, upperSubtotalThreshold, lowerPriceThreshold, upperPriceThreshold, freeSubtotalThreshold, weightInterval)

@@ -26,7 +26,7 @@ main = do
       x <- jsonData :: ActionM Request
       rates <- liftIO $ getPostalCodeRates db
       case rates of
-        rate : _ -> json $ Response $ price rate
+        (PostalCodeOverrideRate _ _ rate) : _ -> json $ Response $ price (fromMaybe 0 $ subtotal x) (fromMaybe 0 $ weight x) rate
         _ -> do
           status notFound404
           text "No rates found"
