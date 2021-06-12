@@ -3,10 +3,11 @@ module Utils where
 import Model
 
 import Data.Text
+import Data.Tuple
 import Data.UUID
 
-apply :: (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> PostalCodeOverrideRate
-apply (id,
+applyPostalCodeOverride :: (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> PostalCodeOverrideRate
+applyPostalCodeOverride (id,
   postalCode,
   startingPrice,
   subtotalFactor,
@@ -29,8 +30,8 @@ apply (id,
         freeSubtotalThreshold
         weightInterval
 
-unapply :: PostalCodeOverrideRate -> (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
-unapply (PostalCodeOverrideRate
+unapplyPostalCodeOverride :: PostalCodeOverrideRate -> (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
+unapplyPostalCodeOverride (PostalCodeOverrideRate
   id
   postalCode
   (RateDef
@@ -45,6 +46,31 @@ unapply (PostalCodeOverrideRate
   )) = (
     id,
     postalCode,
+    startingPrice,
+    subtotalFactor,
+    lowerSubtotalThreshold,
+    upperSubtotalThreshold,
+    lowerPriceThreshold,
+    upperPriceThreshold,
+    freeSubtotalThreshold,
+    weightInterval)
+
+unapplyLocationOverride :: LocationOverrideRate -> (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
+unapplyLocationOverride (LocationOverrideRate
+  id
+  locationId
+  (RateDef
+    startingPrice
+    subtotalFactor
+    lowerSubtotalThreshold
+    upperSubtotalThreshold
+    lowerPriceThreshold
+    upperPriceThreshold
+    freeSubtotalThreshold
+    weightInterval
+  )) = (
+    id,
+    locationId,
     startingPrice,
     subtotalFactor,
     lowerSubtotalThreshold,

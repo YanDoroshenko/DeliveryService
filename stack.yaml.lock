@@ -3,32 +3,32 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-snapshots:
-- original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/14.yaml
-  completed:
-    sha256: 3740f22286bf5e6e3d82f88125e1c708b6e27847211f956b530aa5d83cf39383
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/14.yaml
-    size: 567677
 packages:
-- original:
-    hackage: cql-io-1.1.1
-  completed:
-    pantry-tree:
-      sha256: 7ced76ae95b51fa1669b4fcaeec3825b5cb8cf1f4e37c53d0bddf6234742eba8
-      size: 2067
+- completed:
     hackage: cql-io-1.1.1@sha256:897ef0811b227c8b1a269b29b9c1ebfb09c46f00d66834e2e8c6f19ea7f90f7d,4611
-- original:
-    hackage: cql-4.0.3
-  completed:
     pantry-tree:
-      sha256: 94433b7c7c46bea532fdc64c6988643a48e39b643948003b27e5bde1bdad3b24
-      size: 1281
+      size: 2067
+      sha256: 7ced76ae95b51fa1669b4fcaeec3825b5cb8cf1f4e37c53d0bddf6234742eba8
+  original:
+    hackage: cql-io-1.1.1
+- completed:
     hackage: cql-4.0.3@sha256:10d6b09715699efec5c97f22887aaf65c8fa0b0916c926ef79bc21f4db460175,3157
-- original:
-    hackage: tinylog-0.15.0
-  completed:
     pantry-tree:
-      sha256: f26c665b702c8874fc28edc90d75a1acb3ccae967e131ff6d062af3837e32537
-      size: 527
+      size: 1281
+      sha256: 94433b7c7c46bea532fdc64c6988643a48e39b643948003b27e5bde1bdad3b24
+  original:
+    hackage: cql-4.0.3
+- completed:
     hackage: tinylog-0.15.0@sha256:5f5d1bf917f03c74401bd5f6e9d7af8c1286064ca5a22fcc336646712b7dd014,1616
+    pantry-tree:
+      size: 527
+      sha256: f26c665b702c8874fc28edc90d75a1acb3ccae967e131ff6d062af3837e32537
+  original:
+    hackage: tinylog-0.15.0
+snapshots:
+- completed:
+    size: 567677
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/14.yaml
+    sha256: 3740f22286bf5e6e3d82f88125e1c708b6e27847211f956b530aa5d83cf39383
+  original:
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/14.yaml

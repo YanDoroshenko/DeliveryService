@@ -3,27 +3,13 @@ module Model where
 import Data.Text
 import Data.UUID
 
-data PostalCodeOverrideRate = PostalCodeOverrideRate {
-  id :: UUID,
-  postalCode :: Text,
-  postalCodeRate :: RateDef
-                                                     } deriving (Eq, Show)
+data PostalCodeOverrideRate = PostalCodeOverrideRate UUID Text RateDef
 
-data LocationOverrideRate = LocationPostalCodeOverrideRate {
-  locationId :: Text,
-  locationRate :: RateDef
-                                                                     } deriving (Eq, Show)
+data LocationOverrideRate = LocationOverrideRate UUID Text RateDef
 
-data BaseDistanceRate = BaseDistanceRate {
-  fromDistance :: Maybe Double,
-  toDistance :: Maybe Double,
-  distanceRate :: RateDef
-                                         } deriving (Eq, Show)
+data BaseDistanceRate = BaseDistanceRate UUID (Maybe Double) (Maybe Double) RateDef
 
-data StateOverrideRate = StateOverridRate  {
-  stateCode :: Text,
-  stateRate :: RateDef
-                                           } deriving (Eq, Show)
+data StateOverrideRate = StateOverridRate UUID Text RateDef
 
 data RateDef = RateDef {
   startingPrice :: Maybe Double,
@@ -34,7 +20,7 @@ data RateDef = RateDef {
   upperPriceThreshold :: Maybe Double,
   freeSubtotalThreshold :: Maybe Double,
   weightInterval :: Maybe Double
-                       } deriving (Eq, Show)
+                       }
 
 data Request = Request {
   distance :: Maybe Double,
@@ -42,4 +28,4 @@ data Request = Request {
   weight :: Maybe Double
                        } deriving (Eq, Show)
 
-data Response = Response { price :: Maybe Double } deriving (Eq, Show)
+data Response = Response (Maybe Double)
