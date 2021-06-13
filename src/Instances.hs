@@ -18,6 +18,7 @@ instance FromJSON StateOverrideRate
 instance ToJSON StateOverrideRate
 
 instance FromJSON Request
+instance ToJSON Request
 
 instance ToJSON Response
 

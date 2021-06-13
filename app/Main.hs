@@ -12,7 +12,7 @@ import Data.Maybe
 import System.Logger
 import Web.Scotty
 import Network.HTTP.Types.Status
---import Data.Aeson (encode)
+import Data.Aeson (encode)
 
 main :: IO ()
 main = do
@@ -28,8 +28,8 @@ main = do
     post "/calculate" $ do
       x <- jsonData :: ActionM Request
       rates <- liftIO $ getPostalCodeRates db
-      --_ <- debug log $ msg $ encode x
-      _ <- debug log $ msg ("log" :: String)
+      _ <- debug log $ msg $ encode x
+      _ <- sequence ((\r -> debug log $ msg $ encode r) <$> rates)
       case rates of
         (PostalCodeOverrideRate _ _ rate) : _ -> json $ Response $ price (fromMaybe 0 $ subtotal x) (fromMaybe 0 $ weight x) rate
         _ -> do
