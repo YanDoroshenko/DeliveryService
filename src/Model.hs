@@ -11,7 +11,7 @@ data LocationOverrideRate = LocationOverrideRate UUID Text RateDef
 
 data BaseDistanceRate = BaseDistanceRate UUID (Maybe Double) (Maybe Double) RateDef
 
-data StateOverrideRate = StateOverridRate UUID Text RateDef
+data StateOverrideRate = StateOverrideRate UUID Text RateDef
 
 data RateDef = RateDef {
   startingPrice :: Maybe Double,
