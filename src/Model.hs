@@ -30,7 +30,7 @@ price subtotal weight (RateDef startingPrice subtotalFactor lowerSubtotalThresho
     Just (startingPrice, subtotalFactor) ->
       if (not $ subtotalInBounds subtotal lowerSubtotalThreshold upperSubtotalThreshold)
          then Nothing
-      else if (overThreshold subtotal freeSubtotalThreshold)
+      else if (fromMaybe False $ (<= subtotal) <$> freeSubtotalThreshold)
         then Just 0
         else Just $ applyBounds basePrice lowerPriceBound upperPriceBound where
           basePrice = (startingPrice + subtotal * subtotalFactor) * (weightFactor weight weightInterval)
@@ -40,9 +40,8 @@ combine :: Maybe Double -> Maybe Double -> Maybe (Double, Double)
 combine (Just price) subtotalFactor = Just (price, fromMaybe 0 subtotalFactor)
 combine _ subtotalFactor = (0, ) <$> subtotalFactor
 
-overThreshold :: Double -> Maybe Double -> Bool
-overThreshold x (Just threshold) = x >= threshold
-overThreshold _ _ = True
+overThreshold :: Double -> Double -> Bool
+overThreshold x threshold = x >= threshold
 
 weightFactor :: Double -> Maybe Double -> Double
 weightFactor weight (Just weightInterval) = if (x > (fromIntegral $ round x))
