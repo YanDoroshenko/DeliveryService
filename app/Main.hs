@@ -23,16 +23,21 @@ main = do
       (liftIO $ getPostalCodeRates db) >>= json
     post "/" $ do
       x <- jsonData :: ActionM PostalCodeOverrideRate
+      _ <- debug log $ msg $ mconcat ["Create postal code override rate - request: ", encode x]
       _ <- liftIO $ insertPostalCodeRate x
       json x
     post "/calculate" $ do
       x <- jsonData :: ActionM Request
+      _ <- debug log $ msg $ mconcat ["Calculate price - request: ", encode x]
       rates <- liftIO $ getPostalCodeRates db
-      _ <- debug log $ msg $ encode x
-      _ <- sequence ((\r -> debug log $ msg $ encode r) <$> rates)
       case rates of
-        (PostalCodeOverrideRate _ _ rate) : _ -> json $ Response $ price (fromMaybe 0 $ subtotal x) (fromMaybe 0 $ weight x) rate
+        (PostalCodeOverrideRate _ _ rate) : _ ->  do
+          let price_ = price (fromMaybe 0 $ subtotal x) (fromMaybe 0 $ weight x) rate
+          let response = Response $ price_
+          _ <- debug log $ msg $ mconcat ["Calculate price - response: ", encode response]
+          json response
         _ -> do
+          _ <- warn log $ msg ("No rates found" :: String)
           status notFound404
           text "No rates found"
   liftIO $ DB.close db
