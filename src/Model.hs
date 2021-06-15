@@ -5,13 +5,7 @@ import Data.Maybe
 import Data.Text
 import Data.UUID
 
-data PostalCodeOverrideRate = PostalCodeOverrideRate UUID Text RateDef
-
-data LocationOverrideRate = LocationOverrideRate UUID Text RateDef
-
-data BaseDistanceRate = BaseDistanceRate UUID (Maybe Double) (Maybe Double) RateDef
-
-data StateOverrideRate = StateOverrideRate UUID Text RateDef
+data Rate = PostalCodeOverrideRate UUID Text RateDef | LocationOverrideRate UUID Text RateDef | BaseDistanceRate UUID (Maybe Double) (Maybe Double) RateDef | StateOverrideRate UUID Text RateDef
 
 data RateDef = RateDef {
   startingPrice :: Maybe Double,

@@ -20,24 +20,17 @@ main = do
   log <- new defSettings
   scotty 3000 $ do
     get "/" $ do
-      (liftIO $ getPostalCodeRates db) >>= json
+      --(liftIO $ getPostalCodeRates db) >>= json
+      text "lol"
     post "/" $ do
-      x <- jsonData :: ActionM PostalCodeOverrideRate
-      _ <- debug log $ msg $ mconcat ["Create postal code override rate - request: ", encode x]
-      _ <- liftIO $ insertPostalCodeRate x
+      x <- jsonData :: ActionM Rate
+      _ <- debug log $ msg $ mconcat ["Create rate - request: ", encode x]
+      _ <- liftIO $ insertRate x
       json x
     post "/calculate" $ do
       x <- jsonData :: ActionM Request
       _ <- debug log $ msg $ mconcat ["Calculate price - request: ", encode x]
-      rates <- liftIO $ getPostalCodeRates db
-      case rates of
-        (PostalCodeOverrideRate _ _ rate) : _ ->  do
-          let price_ = price (fromMaybe 0 $ subtotal x) (fromMaybe 0 $ weight x) rate
-          let response = Response $ price_
-          _ <- debug log $ msg $ mconcat ["Calculate price - response: ", encode response]
-          json response
-        _ -> do
-          _ <- warn log $ msg ("No rates found" :: String)
-          status notFound404
-          text "No rates found"
+      _ <- warn log $ msg ("No rates found" :: String)
+      status notFound404
+      text "No rates found"
   liftIO $ DB.close db
