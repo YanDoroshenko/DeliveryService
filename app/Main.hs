@@ -4,7 +4,6 @@ module Main where
 import Model
 import DB
 import Service
-import Typeclasses
 import Instances
 
 import Control.Monad.IO.Class
@@ -23,10 +22,10 @@ main = do
       --(liftIO $ getPostalCodeRates db) >>= json
       text "lol"
     post "/" $ do
-      x <- jsonData :: ActionM Rate
-      _ <- debug log $ msg $ mconcat ["Create rate - request: ", encode x]
-      _ <- liftIO $ insertRate x
-      json x
+      rates <- jsonData :: ActionM [Rate]
+      _ <- debug log $ msg $ mconcat ["Create rates - request: ", encode rates]
+      _ <- liftIO $ sequence $ (\x -> insertRate x db) <$> rates
+      status created201
     post "/calculate" $ do
       x <- jsonData :: ActionM Request
       _ <- debug log $ msg $ mconcat ["Calculate price - request: ", encode x]

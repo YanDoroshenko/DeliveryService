@@ -3,7 +3,6 @@
 module Instances where
 
 import Model
-import Typeclasses
 
 import GHC.Generics
 import Data.Aeson
