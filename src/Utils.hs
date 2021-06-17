@@ -8,7 +8,7 @@ import Data.UUID
 mkString :: [String] -> String
 mkString xs = foldr (\l r -> l ++ ", " ++ r) "" xs
 
-unapply :: Rate ->  Either (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) (UUID, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
+unapply :: Rate ->  Either (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) (UUID, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
 unapply (PostalCodeOverrideRate id
   postalCode
   (RateDef
@@ -45,3 +45,16 @@ unapply (StateOverrideRate id
     freeSubtotalThreshold
     weightInterval
   )) = Left (id, stateCode, startingPrice,  subtotalFactor,  lowerSubtotalThreshold,  upperSubtotalThreshold,  lowerPriceBound,  upperPriceBound,  freeSubtotalThreshold,  weightInterval)
+unapply (BaseDistanceRate id
+  distanceFrom
+  distanceTo
+  (RateDef
+    startingPrice
+    subtotalFactor
+    lowerSubtotalThreshold
+    upperSubtotalThreshold
+    lowerPriceBound
+    upperPriceBound
+    freeSubtotalThreshold
+    weightInterval
+  )) = Right (id, distanceFrom, distanceTo, startingPrice,  subtotalFactor,  lowerSubtotalThreshold,  upperSubtotalThreshold,  lowerPriceBound,  upperPriceBound,  freeSubtotalThreshold,  weightInterval)

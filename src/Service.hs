@@ -29,5 +29,5 @@ insertQuery table keyFields = LazyText.pack $ "INSERT INTO delivery." ++ table +
 insertRate :: Rate -> ClientState -> IO ()
 insertRate rate@(PostalCodeOverrideRate _ _ _) db = cqlInsert (prepared $ QueryString $ insertQuery "postal_code_override_rates" ["postal_code"]) (fromLeft (throw $ TypeError "left") $ unapply rate) db
 insertRate rate@(LocationOverrideRate _ _ _) db = cqlInsert (prepared $ QueryString $ insertQuery "location_override_rates" ["location_id"]) (fromLeft (throw $ TypeError "left") $ unapply rate) db
-insertRate rate@(BaseDistanceRate _ _ _ _) db = cqlInsert (prepared $ QueryString $ insertQuery "base_distance_rates" ["distance_from", "distance_to"]) (fromLeft (throw $ TypeError "left") $ unapply rate) db
+insertRate rate@(BaseDistanceRate _ _ _ _) db = cqlInsert (prepared $ QueryString $ insertQuery "base_distance_rates" ["distance_from", "distance_to"]) (fromRight (throw $ TypeError "left") $ unapply rate) db
 insertRate rate@(StateOverrideRate _ _ _) db = cqlInsert (prepared $ QueryString $ insertQuery "state_override_rates" ["state_code"]) (fromLeft (throw $ TypeError "left") $ unapply rate) db
