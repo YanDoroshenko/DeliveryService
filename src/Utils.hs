@@ -58,3 +58,27 @@ unapply (BaseDistanceRate id
     freeSubtotalThreshold
     weightInterval
   )) = Right (id, distanceFrom, distanceTo, startingPrice,  subtotalFactor,  lowerSubtotalThreshold,  upperSubtotalThreshold,  lowerPriceBound,  upperPriceBound,  freeSubtotalThreshold,  weightInterval)
+
+applyPostalCodeRate :: (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> Rate
+applyPostalCodeRate (id,
+  postalCode,
+  startingPrice,
+  subtotalFactor,
+  lowerSubtotalThreshold,
+  upperSubtotalThreshold,
+  lowerPriceBound,
+  upperPriceBound,
+  freeSubtotalThreshold,
+  weightInterval
+                     ) = PostalCodeOverrideRate id
+  postalCode
+  (RateDef
+    startingPrice
+    subtotalFactor
+    lowerSubtotalThreshold
+    upperSubtotalThreshold
+    lowerPriceBound
+    upperPriceBound
+    freeSubtotalThreshold
+    weightInterval
+  )

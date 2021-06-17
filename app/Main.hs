@@ -18,9 +18,7 @@ main = do
   db <- liftIO connect
   log <- new defSettings
   scotty 3000 $ do
-    get "/" $ do
-      --(liftIO $ getPostalCodeRates db) >>= json
-      text "lol"
+    get "/" $ (liftIO $ selectRates db) >>= json
     post "/" $ do
       rates <- jsonData :: ActionM [Rate]
       _ <- debug log $ msg $ mconcat ["Create rates - request: ", encode rates]
