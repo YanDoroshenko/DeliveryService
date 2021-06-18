@@ -36,5 +36,5 @@ selectRates db = do
   postalCodeRates <- fmap applyPostalCodeRate <$> cqlQuery (QueryString $ tableQuery "postal_code_override_rates" ["postal_code"]) () db
   locationRates <- fmap applyLocationRate <$> cqlQuery (QueryString $ tableQuery "location_override_rates" ["location_id"]) () db
   baseDistanceRates <- fmap applyBaseDistanceRate <$> cqlQuery (QueryString $ tableQuery "base_distance_rates" ["distance_from", "distance_to"]) () db
-  stateOverrideRates <- fmap applyStateRate <$> cqlQuery (QueryString $ tableQuery "state_override_rates" ["state_override_rates"]) () db
+  stateOverrideRates <- fmap applyStateRate <$> cqlQuery (QueryString $ tableQuery "state_override_rates" ["state_code"]) () db
   return $ postalCodeRates ++ locationRates ++ baseDistanceRates ++ stateOverrideRates
