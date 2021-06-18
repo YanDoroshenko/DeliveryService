@@ -82,3 +82,78 @@ applyPostalCodeRate (id,
     freeSubtotalThreshold
     weightInterval
   )
+
+applyLocationRate :: (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> Rate
+applyLocationRate (id,
+  locationId,
+  startingPrice,
+  subtotalFactor,
+  lowerSubtotalThreshold,
+  upperSubtotalThreshold,
+  lowerPriceBound,
+  upperPriceBound,
+  freeSubtotalThreshold,
+  weightInterval
+                     ) = LocationOverrideRate id
+  locationId
+  (RateDef
+    startingPrice
+    subtotalFactor
+    lowerSubtotalThreshold
+    upperSubtotalThreshold
+    lowerPriceBound
+    upperPriceBound
+    freeSubtotalThreshold
+    weightInterval
+  )
+
+applyBaseDistanceRate :: (UUID, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> Rate
+applyBaseDistanceRate (id,
+  distanceFrom,
+  distanceTo,
+  startingPrice,
+  subtotalFactor,
+  lowerSubtotalThreshold,
+  upperSubtotalThreshold,
+  lowerPriceBound,
+  upperPriceBound,
+  freeSubtotalThreshold,
+  weightInterval
+                     ) = BaseDistanceRate id
+  distanceFrom
+  distanceTo
+  (RateDef
+    startingPrice
+    subtotalFactor
+    lowerSubtotalThreshold
+    upperSubtotalThreshold
+    lowerPriceBound
+    upperPriceBound
+    freeSubtotalThreshold
+    weightInterval
+  )
+
+applyStateRate :: (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) -> Rate
+applyStateRate (id,
+  stateCode,
+  startingPrice,
+  subtotalFactor,
+  lowerSubtotalThreshold,
+  upperSubtotalThreshold,
+  lowerPriceBound,
+  upperPriceBound,
+  freeSubtotalThreshold,
+  weightInterval
+                     ) = StateOverrideRate id
+  stateCode
+  (RateDef
+    startingPrice
+    subtotalFactor
+    lowerSubtotalThreshold
+    upperSubtotalThreshold
+    lowerPriceBound
+    upperPriceBound
+    freeSubtotalThreshold
+    weightInterval
+  )
+
