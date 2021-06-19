@@ -11,7 +11,9 @@ import Data.Maybe
 import System.Logger
 import Web.Scotty
 import Network.HTTP.Types.Status
-import Data.Aeson (encode)
+import Data.Aeson (decode, encode, Object)
+
+a = decode "{\"name\":\"Dave\",\"age\":2}" :: Maybe Object
 
 main :: IO ()
 main = do
