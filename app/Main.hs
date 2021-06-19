@@ -5,6 +5,7 @@ import Model
 import DB
 import Service
 import Instances
+import Utils
 
 import Control.Monad.IO.Class
 import Data.Maybe
@@ -13,9 +14,6 @@ import Web.Scotty
 import Network.HTTP.Types.Status
 import Data.Aeson (decode, encode, Object)
 
-a = decode "{\"name\":\"Dave\",\"age\":2}" :: Maybe Object
-
-main :: IO ()
 main = do
   db <- liftIO connect
   log <- new defSettings

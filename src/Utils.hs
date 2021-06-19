@@ -8,9 +8,9 @@ import Data.UUID
 mkString :: [String] -> String
 mkString xs = foldr (\l r -> l ++ ", " ++ r) "" xs
 
-or :: Maybe a -> Maybe a -> Maybe a
-or (Just x) _ = Just x
-or _ y = y
+orElse :: Maybe a -> Maybe a -> Maybe a
+orElse (Just x) _ = Just x
+orElse _ y = y
 
 unapply :: Rate ->  Either (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) (UUID, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
 unapply (PostalCodeOverrideRate id

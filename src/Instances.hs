@@ -4,21 +4,33 @@
 module Instances where
 
 import Model
-import Utils (or)
+import Utils (orElse)
 
 import GHC.Generics
 import Control.Applicative (empty)
+import Control.Monad
 import Data.Aeson
 import Data.Aeson.Types (Parser)
 import Data.Maybe
+import Data.Text (Text)
 
 instance FromJSON Rate where
-  parseJSON (Object v) = do
-    p <- v .:? "postalCode" :: Parser (Maybe String)
-    l <- v .:? "locationId" :: Parser (Maybe String)
-    s <- v .:? "stateCode" :: Parser (Maybe String)
-    fromMaybe (parseBaseDistanceRate v) $ ((\_ -> parsePostalCodeRate v) <$> p) `Utils.or` ((\_ -> parseLocationRate v) <$> l) `Utils.or` ((\_ -> parseStateRate v) <$> s)
+  parseJSON (Object v) =
+    foldr (\l r -> l `combineMaybe` r) (return $ parseBaseDistanceRate v) [parse "postalCode" parsePostalCodeRate v, parse "locationId" parseLocationRate v, parse "stateCode" parseStateRate v] >>= Prelude.id
   parseJSON _ = empty
+
+
+parse key f v = ((\p -> (\_ -> f v) <$> p) <$> ((v .:? key) :: Parser (Maybe String)))
+
+combineMaybe :: Monad m => m (Maybe a) -> m a -> m a
+combineMaybe l r =
+  l >>= (\x -> case x of
+           Just x_ -> return x_
+           _ -> r)
+
+maybeRate :: Object -> Text -> (Object -> Parser Rate) -> Parser Rate
+maybeRate v key f =
+  (v .:? key :: Parser (Maybe String)) >>= (\_ -> f v)
 
 withId x y = y <$> (x .: "id")
 
