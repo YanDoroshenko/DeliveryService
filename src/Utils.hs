@@ -2,6 +2,7 @@ module Utils where
 
 import Model
 
+import Control.Monad
 import Data.Text (Text)
 import Data.UUID
 
@@ -11,6 +12,12 @@ mkString xs = foldr (\l r -> l ++ ", " ++ r) "" xs
 orElse :: Maybe a -> Maybe a -> Maybe a
 orElse (Just x) _ = Just x
 orElse _ y = y
+
+combineMaybe :: Monad m => m (Maybe a) -> m a -> m a
+combineMaybe l r =
+  l >>= (\x -> case x of
+           Just x_ -> return x_
+           _ -> r)
 
 unapply :: Rate ->  Either (UUID, Text, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double) (UUID, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double, Maybe Double)
 unapply (PostalCodeOverrideRate id
