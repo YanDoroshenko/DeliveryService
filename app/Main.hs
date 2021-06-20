@@ -30,4 +30,7 @@ main = do
       _ <- warn log $ msg ("No rates found" :: String)
       status notFound404
       text "No rates found"
+    get "/postalCode/:postalCode" $ do
+      postalCode <- param "postalCode"
+      (liftIO $ getPostalCodeRate postalCode db) >>= json
   liftIO $ DB.close db

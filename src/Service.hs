@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Service where
+module Service (insertRate, selectRates, getPostalCodeRate) where
 
 import DB
 import Model
@@ -20,6 +20,9 @@ tableQuery table keyFields = LazyText.pack $ "SELECT id, " ++ (mkString keyField
 idQuery :: (Tuple a, Tuple b) => String -> [String] -> a -> PrepQuery R a b
 idQuery table keyFields parameters = prepared $ QueryString $ mconcat [(tableQuery table keyFields), LazyText.pack " WHERE id = ?;"]
 
+keyQuery :: (Tuple a, Tuple b) => String -> String -> PrepQuery R a b
+keyQuery table keyField = prepared $ QueryString $ mconcat [(tableQuery table [keyField]), LazyText.pack " WHERE ", LazyText.pack keyField, LazyText.pack " = ?;"]
+
 insertQuery :: String -> [String] -> LazyText.Text
 insertQuery table keyFields = LazyText.pack $ "INSERT INTO delivery." ++ table ++ " (id, " ++ keyFieldsStr ++  "starting_price, subtotal_factor, lower_subtotal_threshold, upper_subtotal_threshold, lower_price_bound, upper_price_bound, free_subtotal_threshold, weight_interval) VALUES (?, " ++ keyValuesStr ++ "?, ?, ?, ?, ?, ?, ?, ?);" where
   keyFieldsStr = mkString keyFields
@@ -38,3 +41,6 @@ selectRates db = do
   baseDistanceRates <- fmap applyBaseDistanceRate <$> cqlQuery (QueryString $ tableQuery "base_distance_rates" ["distance_from", "distance_to"]) () db
   stateOverrideRates <- fmap applyStateRate <$> cqlQuery (QueryString $ tableQuery "state_override_rates" ["state_code"]) () db
   return $ postalCodeRates ++ locationRates ++ baseDistanceRates ++ stateOverrideRates
+
+getPostalCodeRate :: String -> ClientState -> IO [Rate]
+getPostalCodeRate postalCode db = fmap applyPostalCodeRate <$> cqlQuery (keyQuery "postal_code_rates_by_key" "postal_code") (Identity $ Text.pack postalCode) db
