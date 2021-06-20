@@ -14,7 +14,10 @@ import Data.Text (Text)
 
 instance FromJSON Rate where
   parseJSON (Object v) =
-    foldr combineMaybe (return $ parseBaseDistanceRate v) [parse "postalCode" parsePostalCodeRate v, parse "locationId" parseLocationRate v, parse "stateCode" parseStateRate v] >>= Prelude.id
+    (parse "postalCode" parsePostalCodeRate v) `combineMaybe` (
+    (parse "locationId" parseLocationRate v) `combineMaybe` (
+    (parse "stateCode" parseStateRate v) `combineMaybe`
+    (return $ parseBaseDistanceRate v))) >>= Prelude.id
   parseJSON _ = empty
 
 instance ToJSON Rate
