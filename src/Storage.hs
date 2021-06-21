@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Service (insertRate, selectRates, getPostalCodeRate) where
+module Storage (insertRate, selectRates, getPostalCodeRate) where
 
 import DB
 import Model

@@ -1,5 +1,5 @@
 {-# LANGUAGE TupleSections #-}
-module Model where
+module Model (Rate(..), RateDef(..), Request(..), Response(..), price) where
 
 import Data.Maybe
 import Data.Text
