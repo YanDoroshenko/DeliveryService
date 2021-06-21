@@ -13,7 +13,7 @@ connect = do
 cqlParams :: Tuple a => a -> QueryParams a
 cqlParams p = QueryParams One False p Nothing Nothing Nothing (Just True)
 
-cqlQuery :: (Tuple a, Tuple b) => QueryString R a b -> a -> ClientState -> IO [b]
+cqlQuery :: (Tuple a, Tuple b, RunQ q) => q R a b -> a -> ClientState -> IO [b]
 cqlQuery queryString p client  =
     runClient client $ query queryString $ cqlParams p
 
