@@ -17,6 +17,7 @@ cqlQuery :: (Tuple a, Tuple b, RunQ q) => q R a b -> a -> ClientState -> IO [b]
 cqlQuery queryString p client  =
     runClient client $ query queryString $ cqlParams p
 
+cqlInsert :: (Tuple a, RunQ q) => q W a () -> a -> ClientState -> IO ()
 cqlInsert queryString p client =
   runClient client $ write queryString $ cqlParams p
 
