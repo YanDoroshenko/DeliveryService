@@ -44,3 +44,12 @@ selectRates db = do
 
 getPostalCodeRate :: String -> ClientState -> IO [Rate]
 getPostalCodeRate postalCode db = fmap applyPostalCodeRate <$> cqlQuery (keyQuery "postal_code_rates_by_key" "postal_code") (Identity $ Text.pack postalCode) db
+
+getLocationRate :: String -> ClientState -> IO [Rate]
+getLocationRate locationId db = fmap applyLocationRate <$> cqlQuery (keyQuery "location_rates_by_key" "location") (Identity $ Text.pack locationId) db
+
+getStateRate :: String -> ClientState -> IO [Rate]
+getStateRate stateCode db = fmap applyStateRate <$> cqlQuery (keyQuery "state_rates_by_key" "stateCode") (Identity $ Text.pack stateCode) db
+
+getBaseDistanceRates :: ClientState -> IO [Rate]
+getBaseDistanceRates db = fmap applyBaseDistanceRate <$> cqlQuery (QueryString $ tableQuery "base_distance_rates" ["distance_from", "distance_to"]) () db
