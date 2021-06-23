@@ -6,6 +6,21 @@ import Control.Monad
 import Data.Text (Text)
 import Data.UUID
 
+applyBounds :: Double -> Maybe Double -> Maybe Double -> Double
+applyBounds x (Just lowerBound) (Just upperBound) = min (max x lowerBound) upperBound
+applyBounds x _ (Just upperBound) = min x upperBound
+applyBounds x (Just lowerBound) _ = max x lowerBound
+applyBounds x _ _ = x
+
+overThreshold :: Double -> Double -> Bool
+overThreshold x threshold = x >= threshold
+
+inBounds :: Double -> Maybe Double -> Maybe Double -> Bool
+inBounds x (Just lowerBound) (Just upperBound) = x >= lowerBound && x <= upperBound
+inBounds x (Just lowerBound) _ = x >= lowerBound
+inBounds x _ (Just upperBound) = x <= upperBound
+inBounds _ _ _ = True
+
 mkString :: [String] -> String
 mkString xs = foldr (\l r -> l ++ ", " ++ r) "" xs
 

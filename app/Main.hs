@@ -3,9 +3,9 @@ module Main where
 
 import Model
 import DB
+import Service
 import Storage
 import Instances
-import Utils
 
 import Control.Monad.IO.Class
 import Data.Maybe
@@ -25,12 +25,7 @@ main = do
       _ <- liftIO $ sequence $ (\x -> insertRate x db) <$> rates
       status created201
     post "/calculate" $ do
-      x <- jsonData :: ActionM Request
-      _ <- debug log $ msg $ mconcat ["Calculate price - request: ", encode x]
-      _ <- warn log $ msg ("No rates found" :: String)
-      status notFound404
-      text "No rates found"
-    get "/postalCode/:postalCode" $ do
-      postalCode <- param "postalCode"
-      (liftIO $ getPostalCodeRate postalCode db) >>= json
+      req <- jsonData :: ActionM Request
+      _ <- debug log $ msg $ mconcat ["Calculate price - request: ", encode req]
+      (liftIO $ calculatePrice req db) >>= json
   liftIO $ DB.close db
