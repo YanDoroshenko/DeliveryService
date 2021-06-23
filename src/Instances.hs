@@ -22,7 +22,16 @@ instance FromJSON Rate where
 
 instance ToJSON Rate
 
-instance FromJSON Request
+instance FromJSON Request where
+  parseJSON (Object v) = Request <$>
+    v .:? "postalCode" <*>
+    v .:? "locationId" <*>
+    v .:? "stateCode" <*>
+    v .:? "distance" <*>
+    v .:? "subtotal" <*>
+    v .:? "weight"
+  parseJSON _ = empty
+
 instance ToJSON Request
 
 instance ToJSON Response
