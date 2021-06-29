@@ -41,9 +41,5 @@ combine _ subtotalFactor = (0, ) <$> subtotalFactor
 
 
 weightFactor :: Double -> Maybe Double -> Double
-weightFactor weight (Just weightInterval) = if (x > (fromIntegral $ round x))
-                                               then x + 1
-                                               else x
-                                                 where
-                                                   x = weight / weightInterval
+weightFactor weight (Just weightInterval) = fromIntegral $ ceiling $ weight / weightInterval
 weightFactor _ _ = 1
