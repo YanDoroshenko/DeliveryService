@@ -6,7 +6,8 @@ import Test.QuickCheck
 main :: IO ()
 main = do
   _ <- checkStartingPrice
-  checkSubtotalFactor
+  _ <- checkSubtotalFactor
+  checkWeightFactor
 
 checkStartingPrice = do
   rate <- generate generateStartingPrice
@@ -20,6 +21,12 @@ checkSubtotalFactor = do
   weight <- generate arbitrary
   quickCheck $ (price subtotal weight rate) == ((subtotal *) <$> (subtotalFactor rate))
 
+checkWeightFactor = do
+  rate <- generate generateWeightInterval
+  subtotal <- generate arbitrary
+  weight <- generate arbitrary
+  quickCheck $ (price subtotal weight rate) == (((\w -> (*) (fromIntegral $ ceiling $ weight / w)) <$> (weightInterval rate)) <*> (startingPrice rate))
+
 generateStartingPrice = do
   startingPrice <- arbitrary
   return $ RateDef startingPrice Nothing Nothing Nothing Nothing Nothing Nothing Nothing
@@ -27,3 +34,8 @@ generateStartingPrice = do
 generateSubtotalFactor = do
   subtotalFactor <- arbitrary
   return $ RateDef Nothing subtotalFactor Nothing Nothing Nothing Nothing Nothing Nothing
+
+generateWeightInterval = do
+  startingPrice <- arbitrary
+  weightInterval <- arbitrary
+  return $ RateDef startingPrice Nothing Nothing Nothing Nothing Nothing Nothing weightInterval
